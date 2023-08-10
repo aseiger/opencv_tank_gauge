@@ -76,7 +76,8 @@ class GaugeCV:
                             progress.reset(t2, total=num_frames)
 
                         progress.advance(t2)
-                        
+                        time.sleep(5)
+
     def get_config(self):
         have_keys = []
         for key in GaugeCV.REQUIRED_CONFIG_KEYS:

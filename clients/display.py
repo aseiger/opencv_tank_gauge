@@ -37,16 +37,20 @@ class GaugePixels:
 
         warn = False
         
-        color = (0,255,0)
+        color = (0,16,0)
         if level > 0.0 and level < 30.0:
-            color = (255, 0, 0)
+            color = (16, 0, 0)
             warn = True
         elif level >= 30 and level < 70:
-            color = (192, 192, 0)
+            color = (12, 12, 0)
             
-        last = int(15 * (level / 100.0)) + 1;
+        last = 15 - int(15 * (level / 100.0));
+        if last > 15:
+            last = 15
+        if last < 0:
+            last = 0
             
-        for pixel in range(0,last,1):
+        for pixel in range(15,last,-1):
             self.pixels[pixel] = color
 
         if show:
@@ -71,7 +75,7 @@ class GaugePixels:
                 
             if state == States.INIT:
                 if phase == 0:
-                    self.pixels.fill((0,0,255))
+                    self.pixels.fill((0,0,16))
                     self.pixels.show()
                 elif phase == 10:
                     self.pixels.fill((0,0,0))
@@ -79,7 +83,7 @@ class GaugePixels:
                 pass
             elif state == States.ERROR:
                 if phase == 0:
-                    self.pixels.fill((255,0,0))
+                    self.pixels.fill((16,0,0))
                     self.pixels.show()
                 elif phase == 5:
                     self.pixels.fill((0,0,0))
@@ -92,9 +96,9 @@ class GaugePixels:
                     self.pixels.fill((0,0,0))
                     self.pixels.show()
                 elif phase == 3:
-                    self.pixels[6] = (0,0,255)
-                    self.pixels[7] = (255,255,255)
-                    self.pixels[8] = (0,0,255)
+                    self.pixels[9] = (0,0,16)
+                    self.pixels[8] = (16,16,16)
+                    self.pixels[7] = (0,0,16)
                     self.pixels.show()
                 elif phase == 6:
                     phase = 0
@@ -103,7 +107,7 @@ class GaugePixels:
                 if phase == 0:
                     # show level and top LED as blue to indicate an update
                     warn, last = self.display_level(level, False)
-                    self.pixels[15] = (0, 0, 255)
+                    self.pixels[0] = (0, 0, 16)
                     self.pixels.show()
 
                 elif phase == 10:
@@ -124,7 +128,7 @@ class GaugePixels:
             elif state == States.SHUTDOWN:
                 if phase == 0:
                     self.pixels.fill((0,0,0))
-                    self.pixels[0] = (255, 255, 255)
+                    self.pixels[0] = (16, 16, 16)
                     self.pixels.show()
                         
             else:
